@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Your Name | ITB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ===== DESIGN TOKENS ===== */
+  :root {
+    --navy:    #1a2744;
+    --navy2:   #243256;
+    --teal:    #1d7a6e;
+    --teal-lt: #e6f4f2;
+    --gold:    #c4893a;
+    --gold-lt: #fdf5ea;
+    --cream:   #faf9f7;
+    --white:   #ffffff;
+    --text:    #1c1c1e;
+    --text2:   #4a4a50;
+    --text3:   #8a8a92;
+    --border:  #e2e0db;
+    --serif:   'Lora', Georgia, serif;
+    --sans:    'DM Sans', system-ui, sans-serif;
+    --radius:  6px;
+    --shadow:  0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  /* ===== RESET ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); font-size: 16px; line-height: 1.7; color: var(--text); background: var(--cream); }
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; display: block; }
+  ul { list-style: none; }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(26, 39, 68, 0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 60px;
+  }
+  .nav-brand { font-family: var(--serif); font-size: 1.05rem; color: #fff; letter-spacing: 0.01em; }
+  .nav-brand span { color: var(--gold); }
+  .nav-links { display: flex; gap: 0.15rem; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase;
+    color: rgba(255,255,255,0.72); padding: 0.4rem 0.75rem; border-radius: var(--radius);
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); text-decoration: none; }
+  .nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: var(--navy);
+    padding: 5rem 2rem 4.5rem;
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 200px 1fr; gap: 3.5rem; align-items: center;
+  }
+  .avatar-wrap {
+    position: relative;
+  }
+  .avatar-wrap::before {
+    content: '';
+    position: absolute; inset: -8px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--teal), var(--gold), var(--teal));
+    opacity: 0.6;
+  }
+  .avatar {
+    position: relative;
+    width: 200px; height: 200px; border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--navy);
+  }
+  .avatar-placeholder {
+    position: relative;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: linear-gradient(135deg, #243256 0%, #1d7a6e 100%);
+    display: flex; align-items: center; justify-content: center;
+    border: 4px solid var(--navy);
+    font-family: var(--serif); font-size: 4rem; color: rgba(255,255,255,0.5);
+  }
+  .hero-text h1 {
+    font-family: var(--serif); font-size: 2.6rem; font-weight: 600;
+    color: #fff; line-height: 1.2; margin-bottom: 0.3rem;
+  }
+  .hero-text .role {
+    font-size: 1.05rem; color: var(--gold); font-weight: 400; margin-bottom: 0.15rem;
+  }
+  .hero-text .institution {
+    font-size: 0.95rem; color: rgba(255,255,255,0.55); margin-bottom: 1.5rem;
+  }
+  .hero-text .bio {
+    font-size: 0.97rem; color: rgba(255,255,255,0.78); line-height: 1.75; max-width: 620px;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.6rem;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.78rem; font-weight: 400; letter-spacing: 0.02em;
+    padding: 0.3rem 0.85rem; border-radius: 99px;
+    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.82);
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: background 0.2s;
+  }
+  .badge:hover { background: rgba(255,255,255,0.18); text-decoration: none; }
+  .badge svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+
+  /* ===== SECTION WRAPPER ===== */
+  .section { padding: 4.5rem 2rem; }
+  .section:nth-child(even) { background: var(--white); }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-family: var(--serif); font-size: 1.7rem; font-weight: 600;
+    color: var(--navy); margin-bottom: 0.4rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: var(--border); max-width: 200px;
+  }
+  .section-sub { font-size: 0.92rem; color: var(--text3); margin-bottom: 2.5rem; }
+
+  /* ===== INTERESTS + EDUCATION (2-col) ===== */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+  }
+  .about-block h3 {
+    font-family: var(--serif); font-size: 1.1rem; color: var(--navy); margin-bottom: 1rem;
+  }
+  .interest-list li {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    font-size: 0.93rem; color: var(--text2); padding: 0.35rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .interest-list li:last-child { border-bottom: none; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 0.45rem; }
+  .edu-item { display: flex; gap: 1rem; margin-bottom: 1.2rem; }
+  .edu-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .edu-item h4 { font-size: 0.93rem; font-weight: 500; color: var(--text); }
+  .edu-item p  { font-size: 0.85rem; color: var(--text3); }
+
+  /* ===== RESEARCH AREAS ===== */
+  .research-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem;
+  }
+  .research-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.5rem 1.6rem;
+    transition: box-shadow 0.25s, transform 0.25s;
+    border-left: 3px solid var(--teal);
+  }
+  .research-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+  .research-card h3 { font-size: 1rem; font-weight: 500; color: var(--navy); margin-bottom: 0.5rem; }
+  .research-card p  { font-size: 0.88rem; color: var(--text2); line-height: 1.65; }
+
+  /* ===== PUBLICATIONS ===== */
+  .pub-list { display: flex; flex-direction: column; gap: 1.1rem; }
+  .pub-item {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.2rem 1.4rem;
+    display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;
+  }
+  .pub-year {
+    font-family: var(--serif); font-size: 0.82rem; font-weight: 600;
+    color: var(--teal); background: var(--teal-lt);
+    border-radius: 4px; padding: 0.2rem 0.5rem; white-space: nowrap; margin-top: 2px;
+  }
+  .pub-item h4 { font-size: 0.95rem; font-weight: 500; color: var(--navy); margin-bottom: 0.2rem; }
+  .pub-meta { font-size: 0.83rem; color: var(--text3); margin-bottom: 0.5rem; }
+  .pub-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-size: 0.73rem; padding: 0.15rem 0.6rem; border-radius: 99px;
+    background: var(--teal-lt); color: var(--teal); border: 1px solid #b8ddd9;
+  }
+  .tag.gold { background: var(--gold-lt); color: var(--gold); border-color: #f0cfa0; }
+  .pub-more {
+    display: inline-block; margin-top: 1.5rem;
+    font-size: 0.88rem; font-weight: 500; color: var(--teal);
+    border: 1px solid var(--teal); padding: 0.45rem 1.2rem; border-radius: 99px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .pub-more:hover { background: var(--teal); color: #fff; text-decoration: none; }
+
+  /* ===== NEWS ===== */
+  .news-list { display: flex; flex-direction: column; gap: 0; }
+  .news-item {
+    display: grid; grid-template-columns: 90px 1fr; gap: 1.2rem; align-items: start;
+    padding: 1.1rem 0; border-bottom: 1px solid var(--border);
+  }
+  .news-item:first-child { border-top: 1px solid var(--border); }
+  .news-date { font-size: 0.8rem; color: var(--text3); padding-top: 0.15rem; font-variant-numeric: tabular-nums; }
+  .news-content p { font-size: 0.92rem; color: var(--text2); }
+  .news-content strong { color: var(--text); font-weight: 500; }
+
+  /* ===== TEAM ===== */
+  .team-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1.5rem;
+  }
+  .team-card { text-align: center; }
+  .team-avatar {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+    margin: 0 auto 0.8rem;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 1.4rem; color: rgba(255,255,255,0.6);
+    border: 3px solid var(--border);
+  }
+  .team-card h4 { font-size: 0.9rem; font-weight: 500; color: var(--navy); }
+  .team-card p  { font-size: 0.8rem; color: var(--text3); }
+
+  /* ===== TEACHING ===== */
+  .teaching-list { display: flex; flex-direction: column; gap: 0.85rem; }
+  .course-item {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.3rem;
+  }
+  .course-code {
+    font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
+    background: var(--navy); color: #fff;
+    border-radius: 4px; padding: 0.2rem 0.55rem; white-space: nowrap; margin-top: 2px;
+  }
+  .course-info h4 { font-size: 0.93rem; font-weight: 500; color: var(--navy); }
+  .course-info p  { font-size: 0.83rem; color: var(--text3); }
+
+  /* ===== CONTACT ===== */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .contact-details { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-row { display: flex; align-items: flex-start; gap: 0.9rem; }
+  .contact-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--teal-lt); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-icon svg { width: 16px; height: 16px; fill: var(--teal); }
+  .contact-row h4 { font-size: 0.82rem; color: var(--text3); margin-bottom: 0.1rem; }
+  .contact-row p, .contact-row a { font-size: 0.93rem; color: var(--text2); }
+  .map-placeholder {
+    background: linear-gradient(135deg, var(--teal-lt) 0%, var(--cream) 100%);
+    border: 1px solid var(--border); border-radius: 10px;
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    font-size: 0.88rem; color: var(--text3); text-align: center; padding: 1rem;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 2rem;
+    font-size: 0.82rem; line-height: 1.8;
+  }
+  footer a { color: rgba(255,255,255,0.7); }
+  footer a:hover { color: #fff; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--navy); padding: 1rem; gap: 0.25rem; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+    .avatar-wrap, .avatar-placeholder { margin: 0 auto; }
+    .hero-badges { justify-content: center; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">Dr. <span>Your Name</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#teaching">Teaching</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero-inner">
+    <div class="avatar-wrap">
+      <!-- Replace src with your actual photo -->
+      <div class="avatar-placeholder">YN</div>
+      <!-- <img src="photo.jpg" alt="Your Name" class="avatar"> -->
+    </div>
+    <div class="hero-text">
+      <div class="role">Associate Professor · Department of [Your Department]</div>
+      <h1>Your Full Name</h1>
+      <div class="institution">Institut Teknologi Bandung (ITB) · Bandung, Indonesia</div>
+      <p class="bio">
+        Brief, compelling 2–3 sentence biography. Describe your core research focus, key achievements,
+        and what makes your work distinctive. This is the first thing visitors read — make it count.
+        Keep it human and approachable, not just a list of credentials.
+      </p>
+      <div class="hero-badges">
+        <a href="mailto:you@itb.ac.id" class="badge">
+          <svg viewBox="0 0 20 20"><path d="M2 4a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2 0v.01L10 9l6-4.99V4H4zm12 2.24l-6 5-6-5V16h12V6.24z"/></svg>
+          you@itb.ac.id
+        </a>
+        <a href="https://scholar.google.com" class="badge" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 110-14 7 7 0 010 14zm0-24L0 9.5l4.838 3.94A8 8 0 0112 9a8 8 0 017.162 4.44L24 9.5z"/></svg>
+          Google Scholar
+        </a>
+        <a href="https://github.com/yourusername" class="badge" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a href="https://orcid.org/0000-0000-0000-0000" class="badge" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 01-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.872 0 3.994-1.969 3.994-3.722s-1.184-3.722-4.047-3.722h-2.244z"/></svg>
+          ORCID
+        </a>
+        <a href="cv.pdf" class="badge" target="_blank">
+          <svg viewBox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 000 2h8a1 1 0 100-2H6zm0 4a1 1 0 100 2h4a1 1 0 100-2H6z"/></svg>
+          Download CV
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT: INTERESTS + EDUCATION -->
+<section class="section" style="background: var(--cream);">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-block">
+        <h3>Research Interests</h3>
+        <ul class="interest-list">
+          <li><span class="dot"></span>Your first research interest area</li>
+          <li><span class="dot"></span>Your second research interest area</li>
+          <li><span class="dot"></span>Your third research interest area</li>
+          <li><span class="dot"></span>Your fourth research interest area</li>
+          <li><span class="dot"></span>Your fifth research interest area</li>
+        </ul>
+      </div>
+      <div class="about-block">
+        <h3>Education</h3>
+        <div class="edu-item">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <h4>PhD in [Your Field], 20XX</h4>
+            <p>University Name, Country</p>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <h4>Master's in [Your Field], 20XX</h4>
+            <p>University Name, Country</p>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <h4>Bachelor's in [Your Field], 20XX</h4>
+            <p>Institut Teknologi Bandung</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH AREAS -->
+<section class="section" id="research">
+  <div class="section-inner">
+    <h2 class="section-title">Research</h2>
+    <p class="section-sub">Our group works on the following core themes</p>
+    <div class="research-grid">
+      <div class="research-card">
+        <h3>Research Area One</h3>
+        <p>Describe this research area in 2–3 sentences. What problem does it solve? What methods or tools are involved?</p>
+      </div>
+      <div class="research-card">
+        <h3>Research Area Two</h3>
+        <p>Describe this research area in 2–3 sentences. Focus on the real-world impact or theoretical contribution of this work.</p>
+      </div>
+      <div class="research-card">
+        <h3>Research Area Three</h3>
+        <p>Describe this research area in 2–3 sentences. Highlight any collaborations, grants, or outcomes associated with it.</p>
+      </div>
+      <div class="research-card">
+        <h3>Research Area Four</h3>
+        <p>Describe this research area in 2–3 sentences. What datasets, platforms, or frameworks are used in this work?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="section" id="publications">
+  <div class="section-inner">
+    <h2 class="section-title">Selected Publications</h2>
+    <p class="section-sub">Recent and representative works — see Google Scholar for the full list</p>
+    <div class="pub-list">
+
+      <div class="pub-item">
+        <span class="pub-year">2024</span>
+        <div>
+          <h4>Title of Your Most Recent Journal Paper</h4>
+          <p class="pub-meta">Your Name, Co-Author, Co-Author · <em>Journal Name</em>, Vol. X, No. Y, pp. Z–Z</p>
+          <div class="pub-tags">
+            <span class="tag">Journal</span>
+            <span class="tag">Q1</span>
+            <span class="tag">Research Area</span>
+            <a href="#" class="tag gold">PDF</a>
+            <a href="#" class="tag gold">DOI</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <span class="pub-year">2024</span>
+        <div>
+          <h4>Title of a Conference Paper</h4>
+          <p class="pub-meta">Your Name, Co-Author · <em>International Conference Name (ACRONYM)</em>, City, Country</p>
+          <div class="pub-tags">
+            <span class="tag">Conference</span>
+            <span class="tag">Research Area</span>
+            <a href="#" class="tag gold">PDF</a>
+            <a href="#" class="tag gold">Slides</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <span class="pub-year">2023</span>
+        <div>
+          <h4>Title of Another Journal Paper</h4>
+          <p class="pub-meta">Co-Author, Your Name, Co-Author · <em>Journal Name</em>, Vol. X, No. Y, pp. Z–Z</p>
+          <div class="pub-tags">
+            <span class="tag">Journal</span>
+            <span class="tag">Collaboration</span>
+            <a href="#" class="tag gold">PDF</a>
+            <a href="#" class="tag gold">Code</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <span class="pub-year">2023</span>
+        <div>
+          <h4>Title of a Book Chapter or Other Work</h4>
+          <p class="pub-meta">Your Name, Co-Author · <em>Book / Venue Title</em>, Publisher</p>
+          <div class="pub-tags">
+            <span class="tag">Book Chapter</span>
+            <a href="#" class="tag gold">Link</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <a href="https://scholar.google.com" class="pub-more" target="_blank">View all publications →</a>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="section" id="news">
+  <div class="section-inner">
+    <h2 class="section-title">News</h2>
+    <p class="section-sub">Latest updates from the group</p>
+    <div class="news-list">
+      <div class="news-item">
+        <div class="news-date">Apr 2025</div>
+        <div class="news-content"><p><strong>New paper accepted</strong> — "Paper Title" has been accepted at <em>Journal/Conference Name</em>. Preprint available soon.</p></div>
+      </div>
+      <div class="news-item">
+        <div class="news-date">Mar 2025</div>
+        <div class="news-content"><p><strong>Research grant awarded</strong> — Received funding from [Funding Agency] for the project "[Project Title]" (20XX–20XX).</p></div>
+      </div>
+      <div class="news-item">
+        <div class="news-date">Feb 2025</div>
+        <div class="news-content"><p><strong>New PhD student</strong> — Welcome to [Name], who joins the group to work on [Research Topic].</p></div>
+      </div>
+      <div class="news-item">
+        <div class="news-date">Jan 2025</div>
+        <div class="news-content"><p><strong>Invited talk</strong> — Presented research at [Conference/Institution Name] in [City].</p></div>
+      </div>
+      <div class="news-item">
+        <div class="news-date">Dec 2024</div>
+        <div class="news-content"><p><strong>Dataset released</strong> — Publicly released the [Dataset Name] dataset. <a href="#">Access here</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section" id="team">
+  <div class="section-inner">
+    <h2 class="section-title">Team</h2>
+    <p class="section-sub">Current members and alumni</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">YN</div>
+        <h4>Your Name</h4>
+        <p>Principal Investigator</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">AB</div>
+        <h4>PhD Student Name</h4>
+        <p>PhD Candidate · Topic Area</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">CD</div>
+        <h4>Master Student Name</h4>
+        <p>Master's Student · Topic Area</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">EF</div>
+        <h4>Research Assistant Name</h4>
+        <p>Research Assistant</p>
+      </div>
+      <div class="team-card" style="border: 1px dashed var(--border); border-radius: 10px; padding: 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 130px;">
+        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">👋</div>
+        <h4 style="font-size: 0.88rem; color: var(--teal);">Join our group!</h4>
+        <p><a href="#contact">Open positions →</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHING -->
+<section class="section" id="teaching">
+  <div class="section-inner">
+    <h2 class="section-title">Teaching</h2>
+    <p class="section-sub">Courses offered at ITB</p>
+    <div class="teaching-list">
+      <div class="course-item">
+        <span class="course-code">IF0001</span>
+        <div class="course-info">
+          <h4>Course Name — Undergraduate</h4>
+          <p>Semester Gasal / Genap · Brief description of what students will learn in this course.</p>
+        </div>
+      </div>
+      <div class="course-item">
+        <span class="course-code">IF5001</span>
+        <div class="course-info">
+          <h4>Advanced Course Name — Graduate</h4>
+          <p>Semester Gasal · Brief description of the graduate-level course and its key topics.</p>
+        </div>
+      </div>
+      <div class="course-item">
+        <span class="course-code">IF5002</span>
+        <div class="course-info">
+          <h4>Another Graduate Course</h4>
+          <p>Semester Genap · Brief description including any special requirements or prerequisites.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact" style="background: var(--cream);">
+  <div class="section-inner">
+    <h2 class="section-title">Contact</h2>
+    <p class="section-sub">Open to collaborations, students, and media enquiries</p>
+    <div class="contact-grid">
+      <div class="contact-details">
+        <div class="contact-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 20 20"><path d="M2 4a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2 0v.01L10 9l6-4.99V4H4zm12 2.24l-6 5-6-5V16h12V6.24z"/></svg>
+          </div>
+          <div>
+            <h4>Email</h4>
+            <a href="mailto:you@itb.ac.id">you@itb.ac.id</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 00-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </div>
+          <div>
+            <h4>Office</h4>
+            <p>Room XX-YY, [Building Name]<br>Institut Teknologi Bandung<br>Jl. Ganesha 10, Bandung 40132</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+          </div>
+          <div>
+            <h4>Phone</h4>
+            <p>+62-22-2508135 ext. XXX</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">
+            <svg viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+          </div>
+          <div>
+            <h4>Office Hours</h4>
+            <p>Tuesday & Thursday, 13:00–15:00<br>or by appointment via email</p>
+          </div>
+        </div>
+      </div>
+      <div class="map-placeholder">
+        📍 Institut Teknologi Bandung<br>Jl. Ganesha 10, Bandung, West Java<br><br>
+        <a href="https://maps.google.com/?q=Institut+Teknologi+Bandung" target="_blank" style="font-size: 0.82rem; color: var(--teal);">Open in Google Maps →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© <span id="year"></span> Your Name · Institut Teknologi Bandung</p>
+  <p style="margin-top: 0.3rem;">
+    <a href="mailto:you@itb.ac.id">Email</a> ·
+    <a href="https://scholar.google.com" target="_blank">Google Scholar</a> ·
+    <a href="https://github.com/yourusername" target="_blank">GitHub</a> ·
+    <a href="https://orcid.org/0000-0000-0000-0000" target="_blank">ORCID</a>
+  </p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+</body>
+</html>
+HTMLEOF
